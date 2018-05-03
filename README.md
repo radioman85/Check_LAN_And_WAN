@@ -9,3 +9,15 @@ Start application with
 "python Check_Internet.py"
 
 It will use the function check_ping in "check_ping".
+
+
+To clone repo:
+
+git clone https://github.com/radioman85/Check_LAN_And_WAN.git
+
+To add new commits:
+git add 
+git commit -m "<your comment>"
+git push origin master
+user name: <user name>
+user password: <*********>
