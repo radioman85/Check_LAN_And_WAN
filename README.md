@@ -10,6 +10,10 @@ Start application with
 
 It will use the function check_ping in "check_ping".
 
+Output:
+This python script will output two files. The first, here called "eggs.csv" represents the entire record of the availability check. The second file "statistics.csv" simply outputs the times in which the WAN resp. the LAN are either available or absent. It is updated at every taken check.
+
+This application runs 24h by default. This time can simply be modified, look up the variable "run_time_in_hours" 
 
 To clone repo:
 
