@@ -13,10 +13,20 @@ st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
 
 msg_success = "is running"
 msg_fail = "is down"
-inverval_seconds = 10  
+inverval_seconds = 10
 
 network_addresses = {"WAN":"www.google.com", "LAN":"192.168.1.1"}
+total_down_time_seconds = {}
+total_available_time_seconds = {}
 
+for i in network_addresses:
+    total_down_time_seconds.update({i:int(0)})
+    total_available_time_seconds.update({i:int(0)})
+
+print(total_down_time_seconds)
+print(total_available_time_seconds)
+
+    
 #print("***********************************************************************")
 #print("The following network addresses will be checked")
 #for i in network_addresses:
@@ -53,8 +63,9 @@ with open('eggs.csv', 'a') as csvfile:
     
     active_document.writerow([])
         
-    
-            
+latest_time_stamp = int(time.time())
+        
+
 while(int(time.time()) <= end_time):
     ts = time.time()
     st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
@@ -74,12 +85,25 @@ while(int(time.time()) <= end_time):
             if status == "Network Active":
                 active_document.writerow([counter]+[st]+[i]+[msg_success])
 
-            # print(msg_success)   
+                total_available_time_seconds[i] += int(ts - latest_time_stamp)
+                
 
             else:
                 active_document.writerow([counter]+[st]+[i]+[msg_fail])
-
-            # print(msg_fail)
-        
+                
+                total_down_time_seconds[i] += int(ts - latest_time_stamp)             
+                
+                
     
+    print(total_available_time_seconds)
+
+    latest_time_stamp = ts
+    
+    
+    output_string = "Total down time in seconds " + str(total_down_time_seconds) + " s\n"
+    output_string += "Total available time in seconds " + str(total_available_time_seconds) + " s"
+    statistic_file = open('statistics.txt', 'w')
+    statistic_file.write(output_string)
+        
+        
     time.sleep(inverval_seconds)
